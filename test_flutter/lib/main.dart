@@ -12,9 +12,9 @@ Future<void> main() async {
   // アプリケーションの実行中に表示される、ステータスバーやナビゲーションバーの設定（没入モード）
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   //　起動時に読み込むenvファイルを指定
-  await dotenv.load(fileName: ".env");
+  // await dotenv.load(fileName: ".env");
   // runAppの後にProviderScopeを置かないとriverpodのエラーが出る。
-  runApp(ProviderScope(
+  runApp(const ProviderScope(
     child: MyApp(),
   ));
 }
@@ -34,47 +34,53 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+// provider イミュータブル（インタフェースを介さない限り、一度構築した構成を変更せず固定化）で複雑なステートオブジェクト
+final homeProvider =
+    StateNotifierProvider<HomeState, Counter>((ref) => HomeState());
+
+// state class StateNotifierが完全にイミュータブル化
+class HomeState extends StateNotifier<Counter> {
+  HomeState() : super(const Counter());
+
+  void countUp() {
+    state = Counter(count: state.count + 1);
+  }
+}
+
+// state data 作成後は状態を変えることはできないオブジェクト。
+@immutable
+class Counter {
+  const Counter({this.count = 0});
+  final int count;
+}
+
+class MyHomePage extends HookConsumerWidget {
+  const MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // プロバイダの値を取得し、その変化を監視。値が変化すると、その値に依存するウィジェットやプロバイダの更新。値を取得するのは、watchかlisten。
+    final state = ref.watch(homeProvider);
+    // プロバイダの値を取得（監視はしない）クリックイベント等の発生時に、その時点での値を取得する場合に使用。ステート自体を取得するのはread。
+    final provider = ref.read((homeProvider.notifier));
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: AppBar(title: Text(title)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
             Text(
-              '$_counter',
+              '${state.count}',
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
+        onPressed: provider.countUp,
         child: const Icon(Icons.add),
       ),
     );
