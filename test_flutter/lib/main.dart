@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:test_flutter/states/kintone_api.dart';
 import 'package:test_flutter/views/home.dart';
 
 Future<void> main() async {
@@ -13,7 +14,7 @@ Future<void> main() async {
   // アプリケーションの実行中に表示される、ステータスバーやナビゲーションバーの設定（没入モード）
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   //　起動時に読み込むenvファイルを指定
-  // await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: ".env");
   // runAppの後にProviderScopeを置かないとriverpodのエラーが出る。
   runApp(const ProviderScope(
     child: MyApp(),
@@ -45,6 +46,10 @@ class HomeState extends StateNotifier<Counter> {
   // ここの関数はprovider.の方から変更可能。
   void increment() {
     state = Counter(count: state.count + 1);
+    // getAPI
+    fetchRecords('');
+    // postAPI
+    postRecord(state.count);
   }
 }
 
@@ -92,13 +97,13 @@ class MyHomePage extends HookConsumerWidget {
               icon: const Icon(Icons.touch_app),
               backgroundColor: Colors.pink,
             ),
+            ElevatedButton(
+              onPressed: provider.increment,
+              child: const Icon(Icons.add),
+            )
           ],
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: provider.increment,
-      //   child: const Icon(Icons.add),
-      // ),
     );
   }
 }
