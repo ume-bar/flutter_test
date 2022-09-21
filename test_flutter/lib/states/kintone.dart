@@ -1,43 +1,42 @@
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'package:test_flutter/env.dart';
 
-final Map<String, String> postHeader = {
-  'X-Cybozu-API-Token': apiToken!,
-  'Content-Type': 'application/json'
-};
-
-final Map<String, String> getHeader = {
-  'X-Cybozu-API-Token': apiToken!,
-};
-
 Future<Map<String, dynamic>> postRecord(int number) async {
+  final dio = Dio();
   final Map<String, dynamic> postRecord = {
     'app': id,
     'record': {
       'number': {'value': number},
     }
   };
-
-  return await http
-      .post(Uri.parse('$baseUrl/record.json'),
-          headers: postHeader, body: jsonEncode(postRecord))
+  return await dio
+      .post(
+    '$baseUrl/record.json',
+    data: jsonEncode(postRecord),
+    options: Options(
+      headers: {
+        'X-Cybozu-API-Token': apiToken!,
+        'Content-Type': 'application/json',
+      },
+    ),
+  )
       .then(((response) {
-    Map<String, dynamic> rec = jsonDecode(response.body);
+    Map<String, dynamic> rec = jsonDecode(response.data);
     return rec;
   }));
 }
 
 Future<Map<String, dynamic>> fetchRecords(String query) async {
+  final dio = Dio();
   String encodedQuery = Uri.encodeFull(query);
-  return await http
-      .get(
-          Uri.parse(
-            '$baseUrl/records.json?app=$id&query=$encodedQuery',
-          ),
-          headers: getHeader)
+  return await dio
+      .get('$baseUrl/records.json?app=$id&query=$encodedQuery',
+          options: Options(headers: {
+            'X-Cybozu-API-Token': apiToken!,
+          }))
       .then(((response) {
-    Map<String, dynamic> rec = jsonDecode(response.body);
+    Map<String, dynamic> rec = jsonDecode(response.data);
     return rec;
   }));
 }
