@@ -101,6 +101,27 @@ class MyHomePage extends HookConsumerWidget {
             ElevatedButton(
               onPressed: provider.increment,
               child: const Icon(Icons.add),
+            ),
+            // FlutterVer2からRaisedButtonが非推奨になってstyleFromでラップして装飾する形になった。
+            ElevatedButton(
+              onPressed: () {},
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                elevation: 16,
+                padding: EdgeInsets.symmetric(
+                  vertical: 15.0,
+                  horizontal: 50,
+                ),
+              ),
+              child: Text(
+                'ElevatedButton',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
             )
           ],
         ),
