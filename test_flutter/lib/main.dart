@@ -113,11 +113,11 @@ class MyHomePage extends HookConsumerWidget {
                 elevation: 16,
                 padding: EdgeInsets.symmetric(
                   vertical: 15.0,
-                  horizontal: 50,
+                  horizontal: 40,
                 ),
               ),
               child: Text(
-                'ElevatedButton',
+                'Text Form',
                 style: TextStyle(
                   color: Colors.white,
                 ),
