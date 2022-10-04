@@ -5,7 +5,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:test_flutter/states/kintone_api.dart';
 import 'package:test_flutter/views/home.dart';
-import 'dart:convert' as convert;
+// import 'dart:convert' as convert;
+
+import 'package:test_flutter/views/text.dart';
 
 Future<void> main() async {
   // メッセージの翻訳、日本のロケールにする。
@@ -108,7 +110,10 @@ class MyHomePage extends HookConsumerWidget {
               ),
               // FlutterVer2からRaisedButtonが非推奨になってstyleFromでラップして装飾する形になった。
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => TextView()));
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
                   shape: RoundedRectangleBorder(
