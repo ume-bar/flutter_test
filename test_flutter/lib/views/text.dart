@@ -10,11 +10,10 @@ class TextView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final updator = useState(0);
 
-    Widget nameContent() {
+    Widget nameContent(String name) {
       return Column(children: [
         Padding(padding: EdgeInsets.only(top: 23)),
-        Text('入力テスト',
-            style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
+        Text(name, style: TextStyle(fontSize: 12, fontWeight: FontWeight.w400)),
         Padding(padding: EdgeInsets.only(bottom: 9)),
         CupertinoTextField(
             // enabled: isMyProfileSetting,
@@ -58,7 +57,15 @@ class TextView extends HookConsumerWidget {
                             Container(
                                 margin: EdgeInsets.only(top: 118),
                                 child: Column(children: [
-                                  nameContent(),
+                                  nameContent('テキスト入力１'),
+                                  div(),
+                                  nameContent('テキスト入力２'),
+                                  div(),
+                                  nameContent('テキスト入力３'),
+                                  div(),
+                                  nameContent('テキスト入力４'),
+                                  div(),
+                                  nameContent('テキスト入力５'),
                                   div(),
                                   Padding(padding: EdgeInsets.only(bottom: 67))
                                 ])),
