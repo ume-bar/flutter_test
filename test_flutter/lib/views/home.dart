@@ -31,31 +31,51 @@ class HomeView extends HookConsumerWidget {
     }
 
     return Scaffold(
-        backgroundColor: Colors.white70,
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            // 数字, アルファベットのベースライン
-            textBaseline: TextBaseline.alphabetic,
-            children: [
-              Container(
-                  height: 160.0,
-                  color: Colors.white,
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "HH : MM : SS . fff ",
-                          style: Theme.of(context).textTheme.headline5,
-                        ),
-                        Text(
-                          timerDisplay.value,
-                          style: Theme.of(context).textTheme.headline3,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            OutlinedButton(
+      backgroundColor: Colors.white70,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // 数字, アルファベットのベースライン
+          textBaseline: TextBaseline.alphabetic,
+          children: [
+            Container(
+                height: 160.0,
+                color: Colors.white,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "HH : MM : SS . fff ",
+                        style: Theme.of(context).textTheme.headline5,
+                      ),
+                      Text(
+                        timerDisplay.value,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              foregroundColor: Colors.black,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              side: const BorderSide(),
+                            ),
+                            onPressed: () async {
+                              isStopPressed.value = false;
+                              isStartPressed.value = false;
+                              isResetPressed.value = false;
+                              timer.start();
+                              Timer(dul, keepRunning);
+                            },
+                            child: const Text('スタート'),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          OutlinedButton(
                               style: OutlinedButton.styleFrom(
                                 foregroundColor: Colors.black,
                                 shape: RoundedRectangleBorder(
@@ -64,57 +84,46 @@ class HomeView extends HookConsumerWidget {
                                 side: const BorderSide(),
                               ),
                               onPressed: () async {
-                                isStopPressed.value = false;
-                                isStartPressed.value = false;
+                                isStopPressed.value = true;
                                 isResetPressed.value = false;
-                                timer.start();
-                                Timer(dul, keepRunning);
+                                isStartPressed.value = true;
+                                timer.stop();
                               },
-                              child: const Text('スタート'),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  side: const BorderSide(),
+                              child: const Text('ストップ')),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          OutlinedButton(
+                              style: OutlinedButton.styleFrom(
+                                foregroundColor: Colors.black,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                onPressed: () async {
-                                  isStopPressed.value = true;
-                                  isResetPressed.value = false;
-                                  isStartPressed.value = true;
-                                  timer.stop();
-                                },
-                                child: const Text('ストップ')),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            OutlinedButton(
-                                style: OutlinedButton.styleFrom(
-                                  foregroundColor: Colors.black,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  side: const BorderSide(),
-                                ),
-                                onPressed: () async {
-                                  isResetPressed.value = true;
-                                  isStartPressed.value = true;
-                                  isStopPressed.value = true;
-                                  timer.stop();
-                                  timer.reset();
-                                  timerDisplay.value = '00:00:00.000';
-                                },
-                                child: const Text('リセット')),
-                          ],
-                        )
-                      ]))
-            ],
-          ),
-        ));
+                                side: const BorderSide(),
+                              ),
+                              onPressed: () async {
+                                isResetPressed.value = true;
+                                isStartPressed.value = true;
+                                isStopPressed.value = true;
+                                timer.stop();
+                                timer.reset();
+                                timerDisplay.value = '00:00:00.000';
+                              },
+                              child: const Text('リセット')),
+                        ],
+                      )
+                    ]))
+          ],
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        // ヒントを表示
+        tooltip: 'return',
+        child: const Icon(Icons.replay_outlined),
+      ),
+    );
   }
 }
