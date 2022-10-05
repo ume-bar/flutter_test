@@ -36,8 +36,10 @@ class TestView extends HookConsumerWidget {
 
     // キーボードの高さを取得してbottomSpaceにいれる
     final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
+    // SingleChildScrollViewを管理
     final scrollController = ScrollController();
     useEffect(() {
+      // ビルド直後にscrollControllerの位置を調整
       WidgetsBinding.instance.addPostFrameCallback((_) {
         scrollController.jumpTo(scrollController.position.maxScrollExtent);
       });
@@ -46,7 +48,7 @@ class TestView extends HookConsumerWidget {
 
     return Scaffold(
       // scrollControllerを利用したいのでこちらはfalseに
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text(title)),
       body: Stack(children: [
         // まずこのSingleChildScrollViewでラップする必要がある
