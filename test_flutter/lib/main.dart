@@ -112,8 +112,11 @@ class MyHomePage extends HookConsumerWidget {
               // FlutterVer2からRaisedButtonが非推奨になってstyleFromでラップして装飾する形になった。
               ElevatedButton(
                 onPressed: () async {
-                  await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => TextView()));
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              NewTextView(title: 'Flutter Demo Home Page')));
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
