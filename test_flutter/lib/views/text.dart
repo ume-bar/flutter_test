@@ -118,6 +118,11 @@ class NewTextView extends HookConsumerWidget {
                                 onChanged: (String e) {
                                   text.value = e;
                                 }),
+                            GestureDetector(
+                              // キーボードのフォーカスを操作
+                              onTap: () => FocusScope.of(context).unfocus(),
+                              child: TextField(),
+                            ),
                           ],
                         )),
                   ],
