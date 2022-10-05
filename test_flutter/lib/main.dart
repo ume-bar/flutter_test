@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:test_flutter/states/kintone_api.dart';
+import 'package:test_flutter/views/button.dart';
 import 'package:test_flutter/views/home.dart';
 import 'package:test_flutter/views/test.dart';
 // import 'dart:convert' as convert;
@@ -126,7 +127,7 @@ class MyHomePage extends HookConsumerWidget {
                   elevation: 16,
                   padding: EdgeInsets.symmetric(
                     vertical: 10.0,
-                    horizontal: 30,
+                    horizontal: 20,
                   ),
                 ),
                 child: Text(
@@ -152,6 +153,27 @@ class MyHomePage extends HookConsumerWidget {
                           builder: (context) => TestView(
                                 title: 'Flutter Demo Home Page',
                               )));
+                },
+              ),
+              SizedBox(
+                width: 2,
+              ),
+              ElevatedButton(
+                child: const Text('Btn'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Colors.black,
+                  shape: const CircleBorder(
+                    side: BorderSide(
+                      color: Colors.black,
+                      width: 1,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                ),
+                onPressed: () async {
+                  await Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => ButtonView()));
                 },
               ),
             ])
