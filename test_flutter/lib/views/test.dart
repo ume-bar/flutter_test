@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:test_flutter/states/kintone_api.dart';
 
@@ -29,6 +31,8 @@ class TestView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(testProvider);
     final provider = ref.read((testProvider.notifier));
+    final _controller = useTextEditingController();
+    final text = useState('');
 
     return Scaffold(
       appBar: AppBar(title: Text(title)),
@@ -40,6 +44,30 @@ class TestView extends HookConsumerWidget {
               '${state.count}',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Container(
+                padding: const EdgeInsets.all(50.0),
+                child: Column(
+                  children: <Widget>[
+                    Text(
+                      '${text.value}',
+                      style: TextStyle(
+                          color: Colors.blueAccent,
+                          fontSize: 30.0,
+                          fontWeight: FontWeight.w500),
+                    ),
+                    new TextField(
+                        controller: _controller,
+                        enabled: true,
+                        maxLength: 10,
+                        maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                        style: TextStyle(color: Colors.red),
+                        obscureText: false,
+                        maxLines: 1,
+                        onChanged: (String e) {
+                          text.value = e;
+                        }),
+                  ],
+                )),
           ],
         ),
       ),

@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:test_flutter/states/kintone_api.dart';
 import 'package:test_flutter/views/home.dart';
+import 'package:test_flutter/views/test.dart';
 // import 'dart:convert' as convert;
 
 import 'package:test_flutter/views/text.dart';
@@ -131,7 +132,25 @@ class MyHomePage extends HookConsumerWidget {
                     color: Colors.white,
                   ),
                 ),
-              )
+              ),
+              SizedBox(
+                width: 2,
+              ),
+              ElevatedButton(
+                child: const Text('テスト画面へ'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey[200],
+                  foregroundColor: Colors.deepOrange,
+                ),
+                onPressed: () async {
+                  await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => TestView(
+                                title: 'Flutter Demo Home Page',
+                              )));
+                },
+              ),
             ])
           ],
         ),
