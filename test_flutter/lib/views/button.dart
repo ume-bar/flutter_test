@@ -89,70 +89,36 @@ class ButtonView extends HookConsumerWidget {
               ],
             ),
             SizedBox(
-              width: 5,
+              width: 10,
             ),
             // 2列目
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                TextButton(
+                ElevatedButton(
                   child: const Text('Button'),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.black,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                   onPressed: () {},
                 ),
                 SizedBox(
                   width: 5,
                 ),
-                TextButton(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
+                ElevatedButton(
+                  child: const Text('Button'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    shape: BeveledRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
                   onPressed: () {},
-                  child: Text('Button'),
-                ),
-                // TextButton(
-                //     style: ButtonStyle(
-                //       foregroundColor:
-                //           MaterialStateProperty.all<Color>(Colors.blue),
-                //       overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                //         (Set<MaterialState> states) {
-                //           if (states.contains(MaterialState.hovered))
-                //             return Colors.blue.withOpacity(0.04);
-                //           if (states.contains(MaterialState.focused) ||
-                //               states.contains(MaterialState.pressed))
-                //             return Colors.blue.withOpacity(0.12);
-                //           return null; // Defer to the widget's default.
-                //         },
-                //       ),
-                //     ),
-                //     onPressed: () {},
-                //     child: Text('Button')),
-                //
-                // TextButton(
-                //   style: ButtonStyle(
-                //     overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                //         (Set<MaterialState> states) {
-                //       if (states.contains(MaterialState.focused))
-                //         return Colors.red;
-                //       return null; // Defer to the widget's default.
-                //     }),
-                //   ),
-                //   onPressed: () {},
-                //   child: Text('Button'),
-                // ),
-                SizedBox(
-                  width: 5,
-                ),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    shape: StadiumBorder(),
-                    side: BorderSide(width: 2, color: Colors.blueAccent),
-                  ),
-                  onPressed: () {},
-                  child: Text('Button'),
                 ),
                 SizedBox(
                   width: 5,
@@ -193,19 +159,89 @@ class ButtonView extends HookConsumerWidget {
                               // bottomRight: bottom right
                               ))),
                 ),
+                ElevatedButton(
+                  child: const Text('Btn'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: Colors.blue,
+                        width: 1,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                  ),
+                  onPressed: () {},
+                ),
+                SizedBox(
+                  width: 5,
+                ),
               ],
             ),
             SizedBox(
-              width: 5,
+              width: 10,
             ),
             // 3列目
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 TextButton(
+                  child: const Text('Button'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.black,
+                  ),
+                  onPressed: () {},
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                TextButton(
                   style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                        Colors.lightBlueAccent),
+                  ),
+                  onPressed: () {},
+                  child: Text('Button'),
+                ),
+                // TextButton(
+                //     style: ButtonStyle(
+                //       foregroundColor:
+                //           MaterialStateProperty.all<Color>(Colors.blue),
+                //       overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                //         (Set<MaterialState> states) {
+                //           if (states.contains(MaterialState.hovered))
+                //             return Colors.blue.withOpacity(0.04);
+                //           if (states.contains(MaterialState.focused) ||
+                //               states.contains(MaterialState.pressed))
+                //             return Colors.blue.withOpacity(0.12);
+                //           return null; // Defer to the widget's default.
+                //         },
+                //       ),
+                //     ),
+                //     onPressed: () {},
+                //     child: Text('Button')),
+                //
+                // TextButton(
+                //   style: ButtonStyle(
+                //     overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                //         (Set<MaterialState> states) {
+                //       if (states.contains(MaterialState.focused))
+                //         return Colors.red;
+                //       return null; // Defer to the widget's default.
+                //     }),
+                //   ),
+                //   onPressed: () {},
+                //   child: Text('Button'),
+                // ),
+
+                SizedBox(
+                  width: 5,
+                ),
+                TextButton(
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all<Color>(
+                        Colors.lightBlueAccent),
                   ),
                   onPressed: () {},
                   child: Text(
@@ -217,38 +253,27 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                OutlinedButton(
+                  style: OutlinedButton.styleFrom(
+                    shape: StadiumBorder(),
+                    side: BorderSide(width: 2, color: Colors.lightBlueAccent),
+                  ),
+                  onPressed: () {},
+                  child: Text(
+                    'Button',
+                    style: TextStyle(
+                        fontSize: 16, decoration: TextDecoration.underline),
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
                 ElevatedButton(
                   child: const Text('Button'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blueAccent,
+                    backgroundColor: Colors.lightBlueAccent,
                     foregroundColor: Colors.white,
-                    shape: const StadiumBorder(),
-                  ),
-                  onPressed: () {},
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                OutlinedButton(
-                  child: const Text('Button'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    side: const BorderSide(color: Colors.blueAccent),
-                  ),
-                  onPressed: () {},
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                OutlinedButton(
-                  child: const Text('Button'),
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.black,
-                    shape: const StadiumBorder(),
-                    side: const BorderSide(color: Colors.blueAccent),
+                    elevation: 16,
                   ),
                   onPressed: () {},
                 ),
@@ -256,27 +281,26 @@ class ButtonView extends HookConsumerWidget {
                   width: 5,
                 ),
                 ElevatedButton(
-                  child: const Text('Button'),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: <Color>[
+                          Colors.lightBlueAccent,
+                          Colors.blue,
+                          Colors.blueAccent,
+                        ],
+                      ),
+                    ),
+                    padding: const EdgeInsets.all(10),
+                    child: const Text('Button'),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[200],
-                    foregroundColor: Colors.blueAccent,
+                    padding: const EdgeInsets.all(0),
                   ),
                   onPressed: () {},
                 ),
                 SizedBox(
                   width: 5,
-                ),
-                ElevatedButton.icon(
-                  icon: const Icon(
-                    Icons.star_outline,
-                    color: Colors.blueAccent,
-                  ),
-                  label: const Text('Button'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey[200],
-                    foregroundColor: Colors.blueAccent,
-                  ),
-                  onPressed: () {},
                 ),
               ],
             ),
