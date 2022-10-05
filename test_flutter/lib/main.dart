@@ -10,6 +10,7 @@ import 'package:test_flutter/views/test.dart';
 // import 'dart:convert' as convert;
 
 import 'package:test_flutter/views/text.dart';
+import 'package:test_flutter/views/timer.dart';
 
 Future<void> main() async {
   // メッセージの翻訳、日本のロケールにする。
@@ -88,17 +89,17 @@ class MyHomePage extends HookConsumerWidget {
               '${state.count}',
               style: Theme.of(context).textTheme.headline4,
             ),
-            const SizedBox(height: 100.0),
+            const SizedBox(height: 2.0),
             FloatingActionButton.extended(
               onPressed: () async {
                 await Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeView(),
+                    builder: (context) => TimerView(),
                   ),
                 );
               },
-              label: const Text('テスト画面へ移動'),
+              label: const Text('ストップウォッチへ移動'),
               icon: const Icon(Icons.touch_app),
               backgroundColor: Colors.pink,
             ),
