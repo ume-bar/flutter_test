@@ -34,69 +34,93 @@ class TestView extends HookConsumerWidget {
     final _controller = useTextEditingController();
     final text = useState('');
 
+    // キーボードの高さを取得してbottomSpaceにいれる
+    final bottomSpace = MediaQuery.of(context).viewInsets.bottom;
+    final scrollController = ScrollController();
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      });
+      return null;
+    }, const []);
+
     return Scaffold(
-      resizeToAvoidBottomInset: true,
+      // scrollControllerを利用したいのでこちらはfalseに
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(title: Text(title)),
       body: Stack(children: [
+        // まずこのSingleChildScrollViewでラップする必要がある
         SingleChildScrollView(
-          child: Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  '${state.count}',
-                  style: Theme.of(context).textTheme.headline4,
+            // controllerでスクロールされる位置を制御
+            controller: scrollController,
+            // 入力に対してスクロールが境界を超えないように制御
+            physics: ClampingScrollPhysics(),
+            // 読み取り方向にスクロールさせたいのでreverseをtrueに
+            reverse: true,
+            // Paddingでラップしてbottom部分の余白を取ります
+            child: Padding(
+              padding: EdgeInsets.only(bottom: bottomSpace),
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text(
+                      '${state.count}',
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
+                    Container(
+                        padding: const EdgeInsets.all(50.0),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              '${text.value}',
+                              style: TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontSize: 30.0,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                            new TextField(
+                                controller: _controller,
+                                enabled: true,
+                                maxLength: 10,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                style: TextStyle(color: Colors.red),
+                                obscureText: false,
+                                maxLines: 1,
+                                onChanged: (String e) {
+                                  text.value = e;
+                                }),
+                            new TextField(
+                                controller: _controller,
+                                enabled: true,
+                                maxLength: 10,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                style: TextStyle(color: Colors.red),
+                                obscureText: false,
+                                maxLines: 1,
+                                onChanged: (String e) {
+                                  text.value = e;
+                                }),
+                            new TextField(
+                                controller: _controller,
+                                enabled: true,
+                                maxLength: 10,
+                                maxLengthEnforcement:
+                                    MaxLengthEnforcement.enforced,
+                                style: TextStyle(color: Colors.red),
+                                obscureText: false,
+                                maxLines: 1,
+                                onChanged: (String e) {
+                                  text.value = e;
+                                }),
+                          ],
+                        )),
+                  ],
                 ),
-                Container(
-                    padding: const EdgeInsets.all(50.0),
-                    child: Column(
-                      children: <Widget>[
-                        Text(
-                          '${text.value}',
-                          style: TextStyle(
-                              color: Colors.blueAccent,
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        new TextField(
-                            controller: _controller,
-                            enabled: true,
-                            maxLength: 10,
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            style: TextStyle(color: Colors.red),
-                            obscureText: false,
-                            maxLines: 1,
-                            onChanged: (String e) {
-                              text.value = e;
-                            }),
-                        new TextField(
-                            controller: _controller,
-                            enabled: true,
-                            maxLength: 10,
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            style: TextStyle(color: Colors.red),
-                            obscureText: false,
-                            maxLines: 1,
-                            onChanged: (String e) {
-                              text.value = e;
-                            }),
-                        new TextField(
-                            controller: _controller,
-                            enabled: true,
-                            maxLength: 10,
-                            maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                            style: TextStyle(color: Colors.red),
-                            obscureText: false,
-                            maxLines: 1,
-                            onChanged: (String e) {
-                              text.value = e;
-                            }),
-                      ],
-                    )),
-              ],
-            ),
-          ),
-        ),
+              ),
+            )),
         Align(
             alignment: Alignment.bottomCenter,
             child: Container(
