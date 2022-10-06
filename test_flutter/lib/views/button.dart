@@ -14,6 +14,7 @@ class ButtonView extends HookConsumerWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                // 1
                 ElevatedButton(
                   child: const Text('Button'),
                   style: ElevatedButton.styleFrom(
@@ -25,6 +26,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 2
                 ElevatedButton(
                   child: const Text('Button'),
                   style: ElevatedButton.styleFrom(
@@ -37,6 +39,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 3
                 OutlinedButton(
                   child: const Text('Button'),
                   style: OutlinedButton.styleFrom(
@@ -51,6 +54,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 4
                 OutlinedButton(
                   child: const Text('Button'),
                   style: OutlinedButton.styleFrom(
@@ -63,6 +67,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 5
                 ElevatedButton(
                   child: const Text('Button'),
                   style: ElevatedButton.styleFrom(
@@ -74,6 +79,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 6
                 ElevatedButton.icon(
                   icon: const Icon(
                     Icons.star_outline,
@@ -95,6 +101,7 @@ class ButtonView extends HookConsumerWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                // 7
                 ElevatedButton(
                   child: const Text('Button'),
                   style: ElevatedButton.styleFrom(
@@ -109,6 +116,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 8
                 ElevatedButton(
                   child: const Text('Button'),
                   style: ElevatedButton.styleFrom(
@@ -123,6 +131,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 9
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
@@ -136,6 +145,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 10
                 ElevatedButton(
                   onPressed: () {},
                   child: Text("Button"),
@@ -147,6 +157,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 11
                 ElevatedButton(
                   onPressed: () {},
                   child: Text("Button"),
@@ -159,6 +170,7 @@ class ButtonView extends HookConsumerWidget {
                               // bottomRight: bottom right
                               ))),
                 ),
+                // 12
                 ElevatedButton(
                   child: const Text('Btn'),
                   style: ElevatedButton.styleFrom(
@@ -186,6 +198,7 @@ class ButtonView extends HookConsumerWidget {
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                // 13
                 TextButton(
                   child: const Text('Button'),
                   style: TextButton.styleFrom(
@@ -196,31 +209,33 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 14
+                // TextButton(
+                //   style: ButtonStyle(
+                //     foregroundColor: MaterialStateProperty.all<Color>(
+                //         Colors.lightBlueAccent),
+                //   ),
+                //   onPressed: () {},
+                //   child: Text('Button'),
+                // ),
                 TextButton(
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all<Color>(
                         Colors.lightBlueAccent),
+                    overlayColor: MaterialStateProperty.resolveWith<Color?>(
+                      (Set<MaterialState> states) {
+                        if (states.contains(MaterialState.hovered))
+                          return Colors.blue.withOpacity(0.04);
+                        if (states.contains(MaterialState.focused) ||
+                            states.contains(MaterialState.pressed))
+                          return Colors.blue.withOpacity(0.12);
+                        return null; // Defer to the widget's default.
+                      },
+                    ),
                   ),
                   onPressed: () {},
                   child: Text('Button'),
                 ),
-                // TextButton(
-                //     style: ButtonStyle(
-                //       foregroundColor:
-                //           MaterialStateProperty.all<Color>(Colors.blue),
-                //       overlayColor: MaterialStateProperty.resolveWith<Color?>(
-                //         (Set<MaterialState> states) {
-                //           if (states.contains(MaterialState.hovered))
-                //             return Colors.blue.withOpacity(0.04);
-                //           if (states.contains(MaterialState.focused) ||
-                //               states.contains(MaterialState.pressed))
-                //             return Colors.blue.withOpacity(0.12);
-                //           return null; // Defer to the widget's default.
-                //         },
-                //       ),
-                //     ),
-                //     onPressed: () {},
-                //     child: Text('Button')),
                 //
                 // TextButton(
                 //   style: ButtonStyle(
@@ -238,6 +253,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 15
                 TextButton(
                   style: ButtonStyle(
                     foregroundColor: MaterialStateProperty.all<Color>(
@@ -253,6 +269,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 16
                 OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     shape: StadiumBorder(),
@@ -268,6 +285,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 17
                 ElevatedButton(
                   child: const Text('Button'),
                   style: ElevatedButton.styleFrom(
@@ -280,6 +298,7 @@ class ButtonView extends HookConsumerWidget {
                 SizedBox(
                   width: 5,
                 ),
+                // 18
                 ElevatedButton(
                   child: Container(
                     decoration: BoxDecoration(

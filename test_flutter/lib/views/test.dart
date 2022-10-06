@@ -40,16 +40,6 @@ class TestView extends HookConsumerWidget {
               '${state.count}',
               style: Theme.of(context).textTheme.headline4,
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                // 以前は primary属性
-                backgroundColor: Colors.red,
-                // 以前は　　onPrimary属性
-                foregroundColor: Colors.white,
-              ),
-              onPressed: () {},
-              child: Text('ElevatedButton with custom foreground/background'),
-            )
           ],
         ),
       ),
