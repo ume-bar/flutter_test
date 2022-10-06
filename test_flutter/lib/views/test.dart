@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:test_flutter/states/kintone_api.dart';
 
 final testProvider =
     StateNotifierProvider<TestState, Counter>((ref) => TestState());
@@ -9,8 +8,6 @@ class TestState extends StateNotifier<Counter> {
   TestState() : super(const Counter());
   void countUp() {
     state = Counter(count: state.count + 1);
-    fetchRecords('');
-    postRecord(state.count);
   }
 }
 

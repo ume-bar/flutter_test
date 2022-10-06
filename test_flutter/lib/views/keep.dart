@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final keepProvider =
     StateNotifierProvider<KeepState, Counter>((ref) => KeepState());
@@ -24,6 +26,27 @@ class KeepView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(keepProvider);
     final provider = ref.read((keepProvider.notifier));
+    final counter = useState(0);
+
+    Future _loadCounter() async {
+      final prefs = await SharedPreferences.getInstance();
+
+      counter.value = (prefs.getInt('counter') ?? 0);
+    }
+
+    Future _incrementCounter() async {
+      final prefs = await SharedPreferences.getInstance();
+
+      counter.value = (prefs.getInt('counter') ?? 0) + 1;
+      prefs.setInt('counter', counter.value);
+    }
+
+    Future _deleteCounter() async {
+      final prefs = await SharedPreferences.getInstance();
+
+      prefs.remove('counter');
+      _loadCounter();
+    }
 
     return Scaffold(
       appBar: AppBar(title: Text('')),
