@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:test_flutter/states/kintone_api.dart';
 import 'package:test_flutter/views/button.dart';
 import 'package:test_flutter/views/home.dart';
+import 'package:test_flutter/views/keep.dart';
 import 'package:test_flutter/views/test.dart';
 // import 'dart:convert' as convert;
 
@@ -103,79 +104,99 @@ class MyHomePage extends HookConsumerWidget {
               icon: const Icon(Icons.touch_app),
               backgroundColor: Colors.pink,
             ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ElevatedButton(
-                onPressed: provider.increment,
-                child: const Icon(Icons.add),
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              // FlutterVer2からRaisedButtonが非推奨になってstyleFromでラップして装飾する形になった。
-              ElevatedButton(
-                onPressed: () async {
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              NewTextView(title: 'Flutter Demo Home Page')));
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  elevation: 16,
-                  padding: EdgeInsets.symmetric(
-                    vertical: 10.0,
-                    horizontal: 20,
-                  ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  onPressed: provider.increment,
+                  child: const Icon(Icons.add),
                 ),
-                child: Text(
-                  'Text Formへ',
-                  style: TextStyle(
-                    color: Colors.white,
+                SizedBox(
+                  width: 2,
+                ),
+                // FlutterVer2からRaisedButtonが非推奨になってstyleFromでラップして装飾する形になった。
+                ElevatedButton(
+                  onPressed: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                NewTextView(title: 'Flutter Demo Home Page')));
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(6),
+                    ),
+                    elevation: 16,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 10.0,
+                      horizontal: 20,
+                    ),
                   ),
-                ),
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              ElevatedButton(
-                child: const Text('テスト画面へ'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[200],
-                  foregroundColor: Colors.deepOrange,
-                ),
-                onPressed: () async {
-                  await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TestView(
-                                title: 'Flutter Demo Home Page',
-                              )));
-                },
-              ),
-              SizedBox(
-                width: 2,
-              ),
-              ElevatedButton(
-                child: const Text('Btn'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  foregroundColor: Colors.black,
-                  shape: const CircleBorder(
-                    side: BorderSide(
-                      color: Colors.black,
-                      width: 1,
-                      style: BorderStyle.solid,
+                  child: Text(
+                    'Text Formへ',
+                    style: TextStyle(
+                      color: Colors.white,
                     ),
                   ),
                 ),
+                SizedBox(
+                  width: 2,
+                ),
+                ElevatedButton(
+                  child: const Text('テスト画面へ'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.grey[200],
+                    foregroundColor: Colors.deepOrange,
+                  ),
+                  onPressed: () async {
+                    await Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => TestView(
+                                  title: 'Flutter Demo Home Page',
+                                )));
+                  },
+                ),
+                SizedBox(
+                  width: 2,
+                ),
+                ElevatedButton(
+                  child: const Text('Btn'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.black,
+                    shape: const CircleBorder(
+                      side: BorderSide(
+                        color: Colors.black,
+                        width: 1,
+                        style: BorderStyle.solid,
+                      ),
+                    ),
+                  ),
+                  onPressed: () async {
+                    await Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => ButtonView()));
+                  },
+                ),
+              ],
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              IconButton(
+                icon: const Icon(Icons.settings_outlined),
                 onPressed: () async {
                   await Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => ButtonView()));
+                      MaterialPageRoute(builder: (context) => KeepView()));
                 },
+                style: IconButton.styleFrom(
+                  foregroundColor: Colors.blue,
+                  backgroundColor: Colors.white,
+                  disabledBackgroundColor: Colors.black,
+                  hoverColor: Colors.grey,
+                  focusColor: Colors.blueGrey,
+                  highlightColor: Colors.white,
+                ),
               ),
             ])
           ],
