@@ -8,8 +8,30 @@ final keepProvider =
 
 class KeepState extends StateNotifier<Counter> {
   KeepState() : super(const Counter());
+
+  Future loadCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+    final count = (prefs.getInt(countPrefsKey) ?? 0);
+    return count;
+  }
+
+  Future incrementCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final count = (prefs.getInt(countPrefsKey) ?? 0) + 1;
+    prefs.setInt(countPrefsKey, count);
+  }
+
+  void deleteCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.remove(countPrefsKey);
+    loadCounter();
+  }
+
   void countUp() {
     state = Counter(count: state.count + 1);
+    incrementCounter();
   }
 }
 
@@ -25,31 +47,10 @@ class Counter {
 class KeepView extends HookConsumerWidget {
   const KeepView({Key? key}) : super(key: key);
 
-  Future<int> _loadCounter() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    X = (prefs.getInt(countPrefsKey) ?? 0);
-  }
-
-  Future<int> _incrementCounter() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    X = (prefs.getInt(countPrefsKey) ?? 0) + 1;
-    prefs.setInt(countPrefsKey, X);
-  }
-
-  Future _deleteCounter() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    prefs.remove(countPrefsKey);
-    _loadCounter();
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(keepProvider);
     final provider = ref.read((keepProvider.notifier));
-    final counter = useState(0);
 
     return Scaffold(
       appBar: AppBar(title: Text('')),
@@ -60,6 +61,10 @@ class KeepView extends HookConsumerWidget {
             Text(
               '${state.count}',
               style: Theme.of(context).textTheme.headline4,
+            ),
+            ElevatedButton(
+              onPressed: provider.deleteCounter,
+              child: const Text('Reset Counter'),
             ),
           ],
         ),
