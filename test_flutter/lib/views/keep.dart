@@ -13,6 +13,9 @@ class KeepState extends StateNotifier<Counter> {
   }
 }
 
+// SharedPreferences で使用する記憶用のキー
+const countPrefsKey = 'counter';
+
 @immutable
 class Counter {
   const Counter({this.count = 0});
