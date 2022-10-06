@@ -25,31 +25,31 @@ class Counter {
 class KeepView extends HookConsumerWidget {
   const KeepView({Key? key}) : super(key: key);
 
+  Future<int> _loadCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    X = (prefs.getInt(countPrefsKey) ?? 0);
+  }
+
+  Future<int> _incrementCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    X = (prefs.getInt(countPrefsKey) ?? 0) + 1;
+    prefs.setInt(countPrefsKey, X);
+  }
+
+  Future _deleteCounter() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.remove(countPrefsKey);
+    _loadCounter();
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(keepProvider);
     final provider = ref.read((keepProvider.notifier));
     final counter = useState(0);
-
-    Future _loadCounter() async {
-      final prefs = await SharedPreferences.getInstance();
-
-      counter.value = (prefs.getInt('counter') ?? 0);
-    }
-
-    Future _incrementCounter() async {
-      final prefs = await SharedPreferences.getInstance();
-
-      counter.value = (prefs.getInt('counter') ?? 0) + 1;
-      prefs.setInt('counter', counter.value);
-    }
-
-    Future _deleteCounter() async {
-      final prefs = await SharedPreferences.getInstance();
-
-      prefs.remove('counter');
-      _loadCounter();
-    }
 
     return Scaffold(
       appBar: AppBar(title: Text('')),
