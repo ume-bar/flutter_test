@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:test_flutter/states/kintone_api.dart';
@@ -66,6 +67,8 @@ class Counter {
   const Counter({this.count = 0});
   final int count;
 }
+
+enum Menu { text, container }
 
 // 呼び出しがHookConsumerWidgetかConsumerWidgetを継承
 class MyHomePage extends HookConsumerWidget {
@@ -205,10 +208,43 @@ class MyHomePage extends HookConsumerWidget {
                   highlightColor: Colors.white,
                 ),
               ),
+              PopupMenuButton<Menu>(
+                onSelected: popupMenuSelected,
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+                  const PopupMenuItem<Menu>(
+                    value: Menu.text,
+                    child: TextButton(
+                      child: const Text('TextSample'),
+                      onPressed: null,
+                    ),
+                  ),
+                  const PopupMenuItem<Menu>(
+                    value: Menu.container,
+                    child: Text('選択2'),
+                  ),
+                ],
+              ),
             ])
           ],
         ),
       ),
     );
   }
+}
+
+void popupMenuSelected(Menu selectedMenu) {
+  switch (selectedMenu) {
+    case Menu.text:
+      _pushPage(context, GoogleSignInPage());
+      break;
+    case Menu.container:
+      _pushPage(context, FirestoreCloudVisionPage());
+      break;
+    default:
+      break;
+  }
+}
+
+void _pushPage(BuildContext context, Widget page) {
+  Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
 }
