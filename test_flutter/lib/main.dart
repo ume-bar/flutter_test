@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -69,11 +69,11 @@ class Counter {
   final int count;
 }
 
-enum Menu { text, container }
+// enum Menu { text, container }
 
 // 呼び出しがHookConsumerWidgetかConsumerWidgetを継承
 class MyHomePage extends HookConsumerWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  MyHomePage({Key? key, required this.title}) : super(key: key);
 
   final String title;
   // useProviderがなくなり、WidgetRef(ref)を使用
@@ -209,20 +209,22 @@ class MyHomePage extends HookConsumerWidget {
                   highlightColor: Colors.white,
                 ),
               ),
-              PopupMenuButton<Menu>(
-                onSelected: popupMenuSelected,
-                itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+              PopupMenuButton(
+                onSelected: (value) {
+                  popupMenuSelected[value](context);
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
                   const PopupMenuItem(
-                    value: Menu.text,
+                    value: 0,
                     child: const ListTile(
                         leading: Icon(Icons.supervisor_account),
                         title: Text("Text")),
                   ),
-                  const PopupMenuItem<Menu>(
+                  const PopupMenuItem(
                     child: const ListTile(
                         leading: Icon(Icons.crop_original),
                         title: Text("Home")),
-                    value: Menu.container,
+                    value: 1,
                   ),
                 ],
               ),
@@ -233,21 +235,31 @@ class MyHomePage extends HookConsumerWidget {
     );
   }
 
-  void popupMenuSelected(Menu selectedMenu) {
-    switch (selectedMenu) {
-      case Menu.text:
-        _pushPage(context, SampleView());
-        break;
-      case Menu.container:
-        _pushPage(context, HomeView());
-        break;
-      default:
-        break;
-    }
-  }
+  // void popupMenuSelected(Menu selectedMenu) {
+  //   switch (selectedMenu) {
+  //     case Menu.text:
+  //       _pushPage(context, SampleView());
+  //       break;
+  //     case Menu.container:
+  //       _pushPage(context, HomeView());
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
+  List<Function> popupMenuSelected = [
+    (BuildContext context) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => SampleView()));
+    },
+    (BuildContext context) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => HomeView()));
+    },
+  ];
 
-  void _pushPage(BuildContext context, Widget page) async {
-    await Navigator.of(context)
-        .push(MaterialPageRoute<void>(builder: (_) => page));
-  }
+  // void _pushPage(BuildContext context, Widget page) async {
+  //   await Navigator.of(context)
+  //       .push(MaterialPageRoute<void>(builder: (_) => page));
+  // }
 }
