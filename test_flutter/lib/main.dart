@@ -86,6 +86,8 @@ class MyHomePage extends HookConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text('緑のインクリメントボタンをタップした回数をKintoneに保存',
+                style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8)),
             Text(
               '${state.count}',
               style: Theme.of(context).textTheme.headline4,
@@ -108,6 +110,9 @@ class MyHomePage extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.lightGreen,
+                  ),
                   onPressed: provider.increment,
                   child: const Icon(Icons.add),
                 ),
@@ -183,6 +188,8 @@ class MyHomePage extends HookConsumerWidget {
               ],
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              Text('カウント保存→',
+                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8)),
               IconButton(
                 icon: const Icon(Icons.settings_outlined),
                 onPressed: () async {
