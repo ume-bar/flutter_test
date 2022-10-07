@@ -8,6 +8,7 @@ import 'package:test_flutter/states/kintone_api.dart';
 import 'package:test_flutter/views/button.dart';
 import 'package:test_flutter/views/home.dart';
 import 'package:test_flutter/views/keep.dart';
+import 'package:test_flutter/views/sample.dart';
 import 'package:test_flutter/views/test.dart';
 // import 'dart:convert' as convert;
 
@@ -211,16 +212,17 @@ class MyHomePage extends HookConsumerWidget {
               PopupMenuButton<Menu>(
                 onSelected: popupMenuSelected,
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
-                  const PopupMenuItem<Menu>(
+                  const PopupMenuItem(
                     value: Menu.text,
-                    child: TextButton(
-                      child: const Text('TextSample'),
-                      onPressed: null,
-                    ),
+                    child: const ListTile(
+                        leading: Icon(Icons.supervisor_account),
+                        title: Text("Text")),
                   ),
                   const PopupMenuItem<Menu>(
+                    child: const ListTile(
+                        leading: Icon(Icons.crop_original),
+                        title: Text("Home")),
                     value: Menu.container,
-                    child: Text('選択2'),
                   ),
                 ],
               ),
@@ -230,21 +232,22 @@ class MyHomePage extends HookConsumerWidget {
       ),
     );
   }
-}
 
-void popupMenuSelected(Menu selectedMenu) {
-  switch (selectedMenu) {
-    case Menu.text:
-      _pushPage(context, GoogleSignInPage());
-      break;
-    case Menu.container:
-      _pushPage(context, FirestoreCloudVisionPage());
-      break;
-    default:
-      break;
+  void popupMenuSelected(Menu selectedMenu) {
+    switch (selectedMenu) {
+      case Menu.text:
+        _pushPage(context, SampleView());
+        break;
+      case Menu.container:
+        _pushPage(context, HomeView());
+        break;
+      default:
+        break;
+    }
   }
-}
 
-void _pushPage(BuildContext context, Widget page) {
-  Navigator.of(context).push(MaterialPageRoute<void>(builder: (_) => page));
+  void _pushPage(BuildContext context, Widget page) async {
+    await Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (_) => page));
+  }
 }
