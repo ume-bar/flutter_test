@@ -8,6 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:test_flutter/states/kintone_api.dart';
 import 'package:test_flutter/views/button.dart';
+import 'package:test_flutter/views/font.dart';
 import 'package:test_flutter/views/home.dart';
 import 'package:test_flutter/views/keep.dart';
 import 'package:test_flutter/views/sample.dart';
@@ -73,9 +74,12 @@ class Counter {
   final int count;
 }
 
-enum Menu { text, container }
+enum Menu { texts, containers, fonts }
 
-List<String> menuList = ['Sample', 'Home'];
+List<String> menuList = [
+  'Sample',
+  'Home',
+];
 
 // 呼び出しがHookConsumerWidgetかConsumerWidgetを継承
 class MyHomePage extends HookConsumerWidget {
@@ -240,16 +244,20 @@ class MyHomePage extends HookConsumerWidget {
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
                   const PopupMenuItem(
-                    value: Menu.text,
+                    value: Menu.texts,
                     child: const ListTile(
-                        leading: Icon(Icons.supervisor_account),
-                        title: Text("Text")),
+                        leading: Icon(Icons.text_fields), title: Text("Text")),
                   ),
                   const PopupMenuItem<Menu>(
                     child: const ListTile(
-                        leading: Icon(Icons.crop_original),
-                        title: Text("Home")),
-                    value: Menu.container,
+                        leading: Icon(Icons.home_filled), title: Text("Home")),
+                    value: Menu.containers,
+                  ),
+                  const PopupMenuItem<Menu>(
+                    child: const ListTile(
+                        leading: Icon(Icons.font_download),
+                        title: Text("Font")),
+                    value: Menu.fonts,
                   ),
                 ],
               ),
@@ -278,13 +286,17 @@ class MyHomePage extends HookConsumerWidget {
     );
   }
 
+  // PopupMenuButton専用メソッド
   void popupMenuSelected(BuildContext context, Menu selectedMenu) {
     switch (selectedMenu) {
-      case Menu.text:
+      case Menu.texts:
         _pushPage(context, SampleView());
         break;
-      case Menu.container:
+      case Menu.containers:
         _pushPage(context, HomeView());
+        break;
+      case Menu.fonts:
+        _pushPage(context, FontView());
         break;
       default:
         break;
