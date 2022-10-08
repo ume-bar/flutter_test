@@ -1,58 +1,101 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-// class SampleView extends HookConsumerWidget {
-//   const SampleView({Key? key}) : super(key: key);
+enum Menu { PopupMenu, Dropdown, FloatingAction }
 
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     return Scaffold();
-//   }
-// }
-
-class SampleView extends StatefulWidget {
-  @override
-  State<StatefulWidget> createState() {
-    return _State();
-  }
-}
-
-class _State extends State<SampleView> {
-  var _selectedValue = 'Hawaii';
-  var _usStates = ["PopupMenuButton", "Hawaii", "Texas"];
+class SampleView extends HookConsumerWidget {
+  const SampleView({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Popup'),
         actions: <Widget>[
-          PopupMenuButton<String>(
-            initialValue: _selectedValue,
-            onSelected: (String s) {
-              setState(() {
-                _selectedValue = s;
-              });
+          PopupMenuButton<Menu>(
+            onSelected: (value) {
+              popupMenuSelected(context, value);
             },
-            itemBuilder: (BuildContext context) {
-              return _usStates.map((String s) {
-                return PopupMenuItem(
-                  child: Text(s),
-                  value: s,
-                );
-              }).toList();
-            },
-          )
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
+              const PopupMenuItem(
+                value: Menu.PopupMenu,
+                child: const ListTile(
+                    leading: Icon(Icons.menu), title: Text("PopupMenuButton")),
+              ),
+              const PopupMenuItem<Menu>(
+                child: const ListTile(
+                    leading: Icon(Icons.arrow_drop_down),
+                    title: Text("DropdownButton")),
+                value: Menu.Dropdown,
+              ),
+              const PopupMenuItem<Menu>(
+                child: const ListTile(
+                    leading: Icon(Icons.add_circle_outline),
+                    title: Text("FloatingActionButton")),
+                value: Menu.FloatingAction,
+              ),
+            ],
+          ),
         ],
       ),
-      body: Center(
-        heightFactor: 4,
-        child: Text(
-          _selectedValue,
-          style: TextStyle(
-            fontSize: 28.0,
-          ),
-        ),
+      body: Center(),
+    );
+  }
+}
+
+void popupMenuSelected(BuildContext context, Menu selectedMenu) {
+  switch (selectedMenu) {
+    case Menu.PopupMenu:
+      _pushPage(context, PopupMenuPage());
+      break;
+    case Menu.Dropdown:
+      _pushPage(context, DropdownPage());
+      break;
+    case Menu.FloatingAction:
+      _pushPage(context, FloatingActionPage());
+      break;
+    default:
+      break;
+  }
+}
+
+void _pushPage(BuildContext context, Widget page) async {
+  await Navigator.of(context)
+      .push(MaterialPageRoute<void>(builder: (_) => page));
+}
+
+class PopupMenuPage extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+        color: Colors.purpleAccent,
+      ),
+    );
+  }
+}
+
+class DropdownPage extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+        color: Colors.yellow,
+      ),
+    );
+  }
+}
+
+class FloatingActionPage extends HookWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+        color: Colors.blue,
       ),
     );
   }
