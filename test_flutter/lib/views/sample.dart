@@ -53,7 +53,7 @@ class SampleView extends HookConsumerWidget {
             );
           }).toList(),
           onChanged: (value) async {
-            switch (menuList[0]) {
+            switch (value) {
               case 'Sample':
                 await Navigator.of(context).push(
                     MaterialPageRoute<void>(builder: (_) => SampleView()));
