@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -72,6 +74,8 @@ class Counter {
 }
 
 enum Menu { text, container }
+
+List<String> menuList = ['Sample', 'Home'];
 
 // 呼び出しがHookConsumerWidgetかConsumerWidgetを継承
 class MyHomePage extends HookConsumerWidget {
@@ -228,6 +232,8 @@ class MyHomePage extends HookConsumerWidget {
               //           title: Text("Home")),
               //       value: 1,
               //     ),
+              Text('SELECT Page→',
+                  style: TextStyle(fontWeight: FontWeight.normal, fontSize: 8)),
               PopupMenuButton<Menu>(
                 onSelected: (value) {
                   popupMenuSelected(context, value);
@@ -246,6 +252,24 @@ class MyHomePage extends HookConsumerWidget {
                     value: Menu.container,
                   ),
                 ],
+              ),
+              DropdownButton<String>(
+                value: menuList.first,
+                items: menuList.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) async {
+                  if (value == 'Sample') {
+                    await Navigator.of(context).push(
+                        MaterialPageRoute<void>(builder: (_) => SampleView()));
+                  } else if (value == 'Home') {
+                    await Navigator.of(context).push(
+                        MaterialPageRoute<void>(builder: (_) => HomeView()));
+                  }
+                },
               ),
             ])
           ],
