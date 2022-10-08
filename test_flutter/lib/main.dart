@@ -69,7 +69,7 @@ class Counter {
   final int count;
 }
 
-// enum Menu { text, container }
+enum Menu { text, container }
 
 // 呼び出しがHookConsumerWidgetかConsumerWidgetを継承
 class MyHomePage extends HookConsumerWidget {
@@ -209,22 +209,39 @@ class MyHomePage extends HookConsumerWidget {
                   highlightColor: Colors.white,
                 ),
               ),
-              PopupMenuButton(
+              // PopupMenuButton(
+              //   onSelected: (value) {
+              //     popupMenuSelected[value](context);
+              //   },
+              //   itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+              //     const PopupMenuItem(
+              //       value: 0,
+              //       child: const ListTile(
+              //           leading: Icon(Icons.supervisor_account),
+              //           title: Text("Text")),
+              //     ),
+              //     const PopupMenuItem(
+              //       child: const ListTile(
+              //           leading: Icon(Icons.crop_original),
+              //           title: Text("Home")),
+              //       value: 1,
+              //     ),
+              PopupMenuButton<Menu>(
                 onSelected: (value) {
-                  popupMenuSelected[value](context);
+                  popupMenuSelected(context, value);
                 },
-                itemBuilder: (BuildContext context) => <PopupMenuEntry>[
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<Menu>>[
                   const PopupMenuItem(
-                    value: 0,
+                    value: Menu.text,
                     child: const ListTile(
                         leading: Icon(Icons.supervisor_account),
                         title: Text("Text")),
                   ),
-                  const PopupMenuItem(
+                  const PopupMenuItem<Menu>(
                     child: const ListTile(
                         leading: Icon(Icons.crop_original),
                         title: Text("Home")),
-                    value: 1,
+                    value: Menu.container,
                   ),
                 ],
               ),
@@ -235,31 +252,32 @@ class MyHomePage extends HookConsumerWidget {
     );
   }
 
-  // void popupMenuSelected(Menu selectedMenu) {
-  //   switch (selectedMenu) {
-  //     case Menu.text:
-  //       _pushPage(context, SampleView());
-  //       break;
-  //     case Menu.container:
-  //       _pushPage(context, HomeView());
-  //       break;
-  //     default:
-  //       break;
-  //   }
-  // }
-  List<Function> popupMenuSelected = [
-    (BuildContext context) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => SampleView()));
-    },
-    (BuildContext context) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeView()));
-    },
-  ];
+  void popupMenuSelected(BuildContext context, Menu selectedMenu) {
+    switch (selectedMenu) {
+      case Menu.text:
+        _pushPage(context, SampleView());
+        break;
+      case Menu.container:
+        _pushPage(context, HomeView());
+        break;
+      default:
+        break;
+    }
+  }
 
-  // void _pushPage(BuildContext context, Widget page) async {
-  //   await Navigator.of(context)
-  //       .push(MaterialPageRoute<void>(builder: (_) => page));
-  // }
+  void _pushPage(BuildContext context, Widget page) async {
+    await Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (_) => page));
+  }
+
+  // List<Function> popupMenuSelected = [
+  //   (BuildContext context) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (context) => SampleView()));
+  //   },
+  //   (BuildContext context) {
+  //     Navigator.push(
+  //         context, MaterialPageRoute(builder: (context) => HomeView()));
+  //   },
+  // ];
 }
