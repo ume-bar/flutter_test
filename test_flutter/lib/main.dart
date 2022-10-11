@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:test_flutter/states/kintone_api.dart';
@@ -22,15 +23,21 @@ Future<void> main() async {
   // メッセージの翻訳、日本のロケールにする。
   Intl.defaultLocale = 'ja';
   // runApp()を呼び出す前に初期化する必要があり、WidgetsBindingのインスタンスを必要に応じてリターン。
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // デフォルトでは、Flutter が最初のフレームを描画すると、スプラッシュ スクリーンは削除される
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
   // アプリケーションの実行中に表示される、ステータスバーやナビゲーションバーの設定（没入モード）
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
   //　起動時に読み込むenvファイルを指定
   await dotenv.load(fileName: ".env");
   // runAppの後にProviderScopeを置かないとriverpodのエラーが出る。
+
   runApp(const ProviderScope(
     child: MyApp(),
   ));
+  // アプリの初期化中にスプラッシュ スクリーンを残したい場合は、preserve()とremove()メソッドを使用する
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
