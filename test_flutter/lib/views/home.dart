@@ -9,19 +9,22 @@ class HomeView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        // ヒントを表示
-        tooltip: 'return',
-        child: const Icon(Icons.replay_outlined),
-      ),
-    );
+        body: SafeArea(
+            child: Container(
+                color: Colors.orange,
+                child: Center(
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                      Container(
+                          child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        // ヒントを表示
+
+                        child: const Icon(Icons.replay_outlined),
+                      )),
+                    ])))));
   }
 }
