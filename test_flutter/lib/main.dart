@@ -14,6 +14,7 @@ import 'package:test_flutter/views/home.dart';
 import 'package:test_flutter/views/keep.dart';
 import 'package:test_flutter/views/sample.dart';
 import 'package:test_flutter/views/test.dart';
+import 'package:test_flutter/views/prime.dart';
 // import 'dart:convert' as convert;
 
 import 'package:test_flutter/views/text.dart';
@@ -83,10 +84,7 @@ class Counter {
 
 enum Menu { texts, containers, fonts }
 
-List<String> menuList = [
-  'Sample',
-  'Home',
-];
+List<String> menuList = ['Sample', 'Home', 'Prime'];
 
 // 呼び出しがHookConsumerWidgetかConsumerWidgetを継承
 class MyHomePage extends HookConsumerWidget {
@@ -283,6 +281,11 @@ class MyHomePage extends HookConsumerWidget {
                   } else if (value == 'Home') {
                     await Navigator.of(context).push(
                         MaterialPageRoute<void>(builder: (_) => HomeView()));
+                  } else if (value == 'Prime') {
+                    await Navigator.of(context).push(MaterialPageRoute<void>(
+                        builder: (_) => PrimeView(
+                              title: '',
+                            )));
                   }
                 },
               ),

@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:test_flutter/views/home.dart';
+import 'package:test_flutter/views/prime.dart';
 
 // Listでもできますが、enumで拾えるようにしてあります。
 enum Menu { PopupMenu, Dropdown, FloatingAction }
 
-List<String> menuList = ['Sample', 'Home'];
+List<String> menuList = ['Sample', 'Home', 'Prime'];
 
 class SampleView extends HookConsumerWidget {
   const SampleView({Key? key}) : super(key: key);
@@ -61,6 +62,13 @@ class SampleView extends HookConsumerWidget {
               case 'Home':
                 await Navigator.of(context)
                     .push(MaterialPageRoute<void>(builder: (_) => HomeView()));
+                break;
+              case 'Prime':
+                await Navigator.of(context).push(MaterialPageRoute<void>(
+                    builder: (_) => PrimeView(
+                          title: '',
+                        )));
+                break;
             }
           },
         ),
