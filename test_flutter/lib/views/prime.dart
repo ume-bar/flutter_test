@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -6,8 +7,33 @@ final primeProvider =
 
 class PrimeState extends StateNotifier<Counter> {
   PrimeState() : super(const Counter());
-  void countUp() {
-    state = Counter(count: state.count + 1);
+
+  Future<void> countUp() async {
+    await for (int p in primeNumberStream()) {
+      print(p);
+      print(state.count);
+      state = Counter(count: p);
+    }
+  }
+
+  Future<void> stop() async {
+    state = Counter(count: 0);
+  }
+}
+
+Stream<int> primeNumberStream() async* {
+  for (int i = 2;; i++) {
+    bool isPrime = true;
+    for (int j = 2; j <= i ~/ 2; j++) {
+      if (i % j == 0) {
+        isPrime = false;
+        break;
+      }
+    }
+    if (isPrime) {
+      await Future.delayed(Duration(seconds: 1));
+      yield i;
+    }
   }
 }
 
@@ -37,6 +63,15 @@ class PrimeView extends HookConsumerWidget {
               '${state.count}',
               style: Theme.of(context).textTheme.headline4,
             ),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                onPressed: provider.stop,
+                child: const Icon(Icons.stop),
+              ),
+            ])
           ],
         ),
       ),
